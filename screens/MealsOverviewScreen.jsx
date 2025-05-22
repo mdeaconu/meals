@@ -1,13 +1,22 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+
+import PropTypes from "prop-types";
+
 import { MEALS } from "../data/dummy-data";
 
-const MealsOverviewScreen = () => {
+const MealsOverviewScreen = ({ route }) => {
+  const categoryId = route.params.categoryId;
+
   return (
     <View style={styles.container}>
-      <Text>Meals Overview Screen</Text>
+      <Text>Meals Overview Screen - {categoryId}</Text>
     </View>
   );
+};
+
+MealsOverviewScreen.propTypes = {
+  route: PropTypes.object,
 };
 
 export default MealsOverviewScreen;
