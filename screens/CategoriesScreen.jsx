@@ -16,6 +16,7 @@ const CategoriesScreen = () => {
           color={itemData.item.color}
         />
       )}
+      numColumns={2}
     />
   );
 };
