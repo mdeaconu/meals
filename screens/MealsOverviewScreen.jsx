@@ -30,6 +30,7 @@ const MealsOverviewScreen = ({ navigation, route }) => {
             affordability: itemData.item.affordability,
             complexity: itemData.item.complexity,
             duration: itemData.item.duration,
+            id: itemData.item.id,
             imageUrl: itemData.item.imageUrl,
             title: itemData.item.title,
           };
