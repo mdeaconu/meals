@@ -29,7 +29,17 @@ const App = () => {
               title: "All Categories",
             }}
           />
-          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
+          <Stack.Screen
+            name="MealsOverview"
+            component={MealsOverviewScreen}
+            // an alternative to navigation setOptions method
+            // options={({ route, navigation }) => {
+            // const categoryId = route.params.categoryId;
+            // return {
+            //   title: categoryId,
+            // };
+            // }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
