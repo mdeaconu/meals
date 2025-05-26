@@ -1,14 +1,39 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import CategoriesScreen from "./screens/CategoriesScreen";
-import MealsOverviewScreen from "./screens/MealsOverviewScreen";
+import FavoritesScreen from "./screens/FavoritesScreen";
 import MealDetailScreen from "./screens/MealDetailScreen";
-import { Button } from "react-native";
+import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 
+const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
+
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#351401" },
+        headerTintColor: "white",
+        sceneStyle: {
+          backgroundColor: "#3f2f25",
+        },
+      }}
+    >
+      <Drawer.Screen
+        name="Categories"
+        component={CategoriesScreen}
+        options={{
+          title: "All Categories",
+        }}
+      />
+      <Drawer.Screen name="Favorites" component={FavoritesScreen} />
+    </Drawer.Navigator>
+  );
+};
 
 const App = () => {
   return (
@@ -25,28 +50,16 @@ const App = () => {
           }}
         >
           <Stack.Screen
-            name="MealsCategories"
-            component={CategoriesScreen}
-            options={{
-              title: "All Categories",
-            }}
+            name="Drawer"
+            component={DrawerNavigator}
+            options={{ headerShown: false, title: "All Categories" }}
           />
-          <Stack.Screen
-            name="MealsOverview"
-            component={MealsOverviewScreen}
-            // an alternative to navigation setOptions method
-            // options={({ route, navigation }) => {
-            // const categoryId = route.params.categoryId;
-            // return {
-            //   title: categoryId,
-            // };
-            // }}
-          />
+          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
           <Stack.Screen
             name="MealDetail"
             component={MealDetailScreen}
             options={{
-              title: "Meal Details",
+              title: "About the Meal",
             }}
           />
         </Stack.Navigator>
