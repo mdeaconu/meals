@@ -1,23 +1,38 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useContext, useLayoutEffect } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 import IconButton from "../components/IconButton";
 import List from "../components/MealDetail/List";
 import MealDetails from "../components/MealDetails";
 import Subtitle from "../components/MealDetail/Subtitle";
 
-import { FavoritesContext } from "../store/context/favorites-context";
+// import { FavoritesContext } from "../store/context/favorites-context";
 
 import { MEALS } from "../data/dummy-data";
+import { addFavorite, removeFavorite } from "../store/redux/favorites";
 
 const MealDetailScreen = () => {
-  const favoritesMealCtx = useContext(FavoritesContext);
+  //const favoritesMealCtx = useContext(FavoritesContext);
+  const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const route = useRoute();
   const mealId = route.params.mealId;
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
-  const mealIsFavorite = favoritesMealCtx.ids.includes(mealId);
+  //const mealIsFavorite = favoritesMealCtx.ids.includes(mealId);
+  const mealIsFavorite = favoriteMealIds.includes(mealId);
+
+  function changeFavoriteStatusHandler() {
+    if (mealIsFavorite) {
+      // favoritesMealCtx.removeFavorite(mealId)
+      dispatch(removeFavorite({ id: mealId }));
+    } else {
+      // favoritesMealCtx.addFavorite(mealId)
+      dispatch(addFavorite({ id: mealId }));
+    }
+  }
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -26,11 +41,7 @@ const MealDetailScreen = () => {
           <IconButton
             color="white"
             icon={mealIsFavorite ? "star" : "star-outline"}
-            onPress={() =>
-              mealIsFavorite
-                ? favoritesMealCtx.removeFavorite(mealId)
-                : favoritesMealCtx.addFavorite(mealId)
-            }
+            onPress={changeFavoriteStatusHandler}
           />
         );
       },
